@@ -1,52 +1,5 @@
 /* Exercise to solve the Traveling Salesman Problem (TSP) using
- a brute force Monte Carlo approach. Your task is to convert the serial
- computation to a parallel computation. The code has to print the
- current shortest total traveling distance found fairly frequently, so 
- you can monitor its progress.
-
- We use random number generator rand_r() specifically because it is thread-safe
- (it doesn't keep anything in a global state; everything is defined by the 
- variable "seed", which can be made private to the thread). 
-
-
- OpenMP: you only have to parallelize the code located between the
- "----------" comment lines. So e.g. don't bother to compute the
- distance matrix in parallel - keep it as it is. The reason for
- that is the distance matrix calculations scale as N^2, whereas the
- minimum traveling distance calculations scale as (N-1)! (N is the number
- of cities), so for N>6 the former becomes totally negligible compared
- to the latter in terms of CPU cycles.
-
- Make sure the parallel code produces correct results, both in terms of
- the smallest distance found and the corresponding itinerary. To do
- this, run both the serial and parallel versions of the code for a small
- number of cities, N_CITIES - say 10 or 11, and identical total number
- of Monte Carlo steps, N_MC. Make sure N_MC is a few times larger than
- the factorial of (N_CITIES-1), so despite the random nature of the
- search you are almost guaranteed to find the exact solution.
-
- Your speedup should be close to the number of threads/ranks you are using.
- Say, on orca development nodes (24 threads) speedup should be >~23.
-
- For convenience, you can develop the code with smaller numbers (N_CITIES=10,
- N_MC=1e7). For final timing tests use N_CITIES=11 and N_MC=1e8.
-
-
- - Don't change the way the cities coordinates are initially randomly
- generated on the host (this will make it difficult to judge
- the code performance).
-
- - Don't forget that int can only handle integers up to ~4 billion. 
-
- - As this is Monte Carlo simulation, don't forget that in a parallel
- version each thread/rank has to start with a unique seed number.
-
- - Try to minimize the impact of a critical region as much as possible
- (OpenMP).
-
- - In OpenMP, experiment with different loop schedules - you might see
- big difference. Find the most efficient kind of schedule for this setup.
-
+ a brute force Monte Carlo approach. 
 
 To compile:
 
@@ -55,14 +8,6 @@ cc -O2 tsp.c -o tsp
 
  - OpenMP:
 cc -O2 -openmp test_2.c -o tsp_omp
-
- - MPI:
-mpicc -O2 tsp_mpi.c -o tsp_mpi
-
-
-To run (on orca devel nodes):
- - MPI:
-mpirun -np 24 ./tsp_mpi
 
 
 */
@@ -128,7 +73,6 @@ timeval_subtract (double *result, struct timeval *x, struct timeval *y)
 
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
 
 
 int main (int argc,char **argv)
