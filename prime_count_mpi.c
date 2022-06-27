@@ -14,7 +14,7 @@ Compiling instructions:
 
  - MPI code:
   mpicc -O2 primes_count.c -o primes_count
-   To run:
+   To run: 
   mpirun -np 24 ./primes_count
 
 */
