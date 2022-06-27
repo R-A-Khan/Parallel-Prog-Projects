@@ -9,7 +9,7 @@ cc -O2 tsp.c -o tsp
  - OpenMP:
 cc -O2 -openmp test_2.c -o tsp_omp
 
-
+ 
 */
 
 #include <sys/time.h>
