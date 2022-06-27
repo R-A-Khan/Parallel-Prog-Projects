@@ -1,32 +1,6 @@
 /* Exercise to convert a simple serial code to count the number of prime
    numbers within a given interval into OpenMP (32-bit, int version).
 
-   All prime numbers can be expressed as 6*k-1 or 6*k+1, k being an
-   integer. We provide the range of k to probe as macro parameters
-   KMIN and KMAX (see below).
-
-   Check the parallel code correctness - it should produce the same number of prime
-   numbers as the serial version, for the same range KMIN...KMAX. (The result
-   is 3,562,113 for K=1...10,000,000.)
-
-   Try to make the parallel code as efficient as possible.
-
-   Your speedup should be close to the number of threads/ranks you are using.
-
-OpenMP instructions:
-
-   The best strategy is to start from KMAX and go down to KMIN. Why?
-
-   The code should print the number of threads used.
-
-   Use "default(none)" in parallel region(s).
-
-   Used OpenMP directives:
- - parallel
- - for schedule
- - single
-
-
 Compiling instructions:
 
  - Serial code:
@@ -37,7 +11,6 @@ Compiling instructions:
 
 */
 
-// Ramsha Khan - Assignment 1 
 
 #include <sys/time.h>
 #include <ctype.h>
@@ -109,7 +82,7 @@ int main (int argc,char **argv)
  // RK: Count is shared, as each thread will need to write to it once it has completed its task
   /*   The best strategy is to start from KMAX and go down to KMIN. Why?
 
-   ANSWER: The primality test will require more work for large values of k. By starting near KMAX and using a 
+   RK: The primality test will require more work for large values of k. By starting near KMAX and using a 
    for schedule with a dynamic clause, and a specified chunk size of 250 (this gave me my best speedup), all threads
    start working on the large values of k, and thus more intensive computations are completed before moving
    on to smaller values of k. This ensures a better distribution of the workload balance.*/
