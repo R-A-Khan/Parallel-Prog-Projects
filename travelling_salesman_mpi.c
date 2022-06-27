@@ -1,7 +1,7 @@
 /* Exercise to solve the Traveling Salesman Problem (TSP) using
  a brute force Monte Carlo approach. Parallelized using MPI
 
-
+ 
 To compile:
 
  - serial:
